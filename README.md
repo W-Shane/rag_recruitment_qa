@@ -19,7 +19,7 @@ rag_recruitment_qa/
 ├── build_vector_db.py   # 读取 csv，构建向量库
 ├── test_retrieve.py     # 【纯离线检索】交互式语义搜索，无需大模型
 ├── qa_cli.py            # 【RAG 问答】需要配置大模型 API‑key
-├── .env                 # 本地环境配置（不要提交到 git）
+├── .env                 # 本地环境配置
 ├── .env.example         # 环境变量模板
 ├── .gitignore
 └── requirements.txt
