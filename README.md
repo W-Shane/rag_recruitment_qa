@@ -1,5 +1,5 @@
 # 招聘岗位RAG问答系统
-> 基于本地向量检索实现的招聘岗位语义检索与RAG问答原型，支持**完全离线语义搜索**，可选择性对接大模型实现检索增强问答。
+> 招聘岗位 RAG 问答系统，基于 BM25 + 向量混合检索，支持离线召回评测；Docker 一键容器化部署，无需 LLM API 即可完成 RAG 效果评估。
 > 
 > 混合检索策略：BM25关键词检索 + 向量语义检索，RRF融合排序；自带离线召回评测脚本，**无需大模型API即可评估检索效果**。
 
@@ -10,7 +10,7 @@
 4. **配置解耦**：模型路径、参数、API密钥全部通过`.env`环境变量配置，不硬编码到代码。
 5. **完善日志、异常捕获**，项目提供`requirements.txt`，环境可快速复现。
 6. **自动化离线评测**：内置Context Recall召回率计算脚本，Docker环境可一键执行评测，不消耗LLM Token，评测结果自动落地本地文件。
-7. **Docker一键容器化部署**：目录挂载持久化，向量库、评测报告直接输出至本机，容器销毁数据不丢失。
+7. **Docker一键容器化部署**：使用数据卷挂载实现持久化，向量库、评测报告直接落盘本地，容器生命周期不影响数据，支持一键复现整套 RAG 评测流程。
 
 ## 📁项目目录结构
 ```text
@@ -102,8 +102,8 @@ python qa_cli.py
 > 
 >挂载策略：data、models、chroma_db、eval 目录全部挂载到本地，容器运行产生的向量库、评测报告直接保存在本机，容器删除不会丢失结果。
 ```
-# 构建镜像（仅修改Dockerfile/requirements.txt才需要加--no-cache；单纯更换数据无需重新build）
-docker compose build --no-cache
+# 构建镜像（仅修改Dockerfile/requirements.txt才需要加-no-cache；单纯更换数据无需重新build）
+docker compose build -no-cache
 
 # 前台启动（推荐调试，实时看日志）
 docker compose up
@@ -141,4 +141,4 @@ docker compose up
 禁止提交：models/、chroma_db/、.env，已配置在 .gitignore。
 
 ## 🛠 技术栈
-Python、LangChain、Chroma、sentence-transformers（text2vec-base-chinese）、HuggingFace Embeddings、RAG、向量数据库、Pandas、BM25 混合检索
+Python、LangChain、Chroma、sentence-transformers（text2vec-base-chinese）、HuggingFace Embeddings、RAG、向量数据库、Pandas、BM25 混合检索、Docker、Docker Compose
