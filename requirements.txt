@@ -1,12 +1,42 @@
+# ===== PyTorch CPU 版（容器无GPU，避免下载CUDA依赖） =====
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+
 #requirements.txt
+# ===== 基础数据处理 =====
 pandas
 python-dotenv
+
+# ===== LangChain 生态 =====
 langchain
-langchain-community
+# 必须锁在 0.4.1：0.4.2 起删除了 chat_models/vertexai 模块，
+# 而 ragas 0.4.3 在 ragas/llms/base.py 中无条件 import 它，会直接 ModuleNotFoundError
+langchain-community==0.4.1
 langchain-openai
 langchain-huggingface
 langchain-chroma
+
+# ===== 向量库与嵌入 =====
 chromadb
 sentence-transformers
 huggingface-hub
+
+# ===== 大模型 API（通义千问） =====
 dashscope
+
+# ===== 配置管理（工程化） =====
+pydantic-settings
+
+# ===== 日志（工程化，可选但推荐） =====
+loguru
+
+# ===== 混合检索（BM25 + 中文分词） =====
+rank-bm25
+jieba
+
+# ===== 评测模块（Ragas，最后一步再装） =====
+# ragas 与 datasets 需要锁定版本，避免 pip 解析到不兼容的新版本
+#ragas==0.4.3
+#datasets>=4.0.0
+#用通义千问，不用谷歌云模块
+#langchain-google-vertexai

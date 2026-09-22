@@ -1,0 +1,15 @@
+services:
+  rag-recruit:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./chroma_db:/app/chroma_db   # 挂载向量库，持久化
+      - ./models:/app/models         # 挂载本地模型目录到容器
+      - ./data:/app/data            #data 目录挂载
+    environment:
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY}
+    stdin_open: true
+    tty: true
+    command: >
+      bash -c "python scripts/build_vector_db.py && python eval/run_eval.py"
