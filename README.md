@@ -52,6 +52,10 @@ pip install -r requirements.txt
 2. 将下载好的模型文件夹重命名为 text2vec-base-chinese。
 3. 将其放置到项目根目录下的 ./models/ 文件夹中。
 
+> ⚠️ 若缺少models目录或模型文件，容器启动会报模型加载失败。
+
+> 提示：容器已经配置`./models:/app/models`挂载，本地放置的模型会直接映射到容器内，无需在容器内重复下载。
+
 ## ⚙️环境变量配置
 复制 .env.example 另存为 .env
 ```env
