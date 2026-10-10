@@ -58,6 +58,7 @@ pip install -r requirements.txt
 
 ## ⚙️环境变量配置
 复制 .env.example 另存为 .env
+修改 .env 内 DASHSCOPE_API_KEY，填入自己阿里云通义密钥
 ```env
 # embedding模型本地路径
 EMBEDDING_MODEL=./models/text2vec-base-chinese
